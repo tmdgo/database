@@ -171,14 +171,14 @@ func (database *RelationalDatabase) RegisterEntities(entities ...interface{}) {
 	database.DB.AutoMigrate(entities...)
 }
 
-func (database *RelationalDatabase) getEntityID(entity interface{}) (id int64, err error) {
+func (database *RelationalDatabase) getEntityID(entity interface{}) (id uint, err error) {
 	fieldType, fieldValue, err := fields.GetTypeAndValue(entity, "ID")
 	if err != nil {
 		return
 	}
-	if reflect.TypeOf(int64(0)) != fieldType {
-		err = fmt.Errorf(`the "%v" entity ID field is not of type int64`, interfaces.GetTypeName(entity))
+	if reflect.TypeOf(uint(0)) != fieldType {
+		err = fmt.Errorf(`the "%v" entity ID field is not of type uint`, interfaces.GetTypeName(entity))
 	}
-	id = fieldValue.(int64)
+	id = fieldValue.(uint)
 	return
 }
